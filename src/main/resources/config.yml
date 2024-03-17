@@ -1,0 +1,29 @@
+weatherSource:
+  - ==: cx.rain.mc.timesync.config.WeatherSource
+    name: hefeng
+    type: HE_FENG
+    key: ''
+    longitude: 116.00
+    latitude: 39.00
+    updateInterval: 3600
+
+  - ==: cx.rain.mc.timesync.config.WeatherSource
+    name: caiyun
+    type: CAI_YUN
+    key: ''
+    longitude: 116.0000
+    latitude: 39.0000
+    updateInterval: 3600
+
+timeSource:
+  - ==: cx.rain.mc.timesync.config.TimeSource
+    name: local
+    type: LOCAL
+    timeZone: Asia/Shanghai
+    updateInterval: 3600
+
+weatherSyncWorld:
+  world: hefeng
+
+timeSyncWorld:
+  world: local
