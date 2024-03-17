@@ -1,0 +1,4 @@
+name: TimeSync
+version: '${version}'
+main: cx.rain.mc.timesync.TimeSync
+api-version: '1.20'
