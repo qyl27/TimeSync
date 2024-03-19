@@ -1,9 +1,18 @@
-package cx.rain.mc.timesync.config;
+package cx.rain.mc.timesync.data;
 
+import com.google.gson.Gson;
+import cx.rain.mc.timesync.data.model.CaiYun;
+import cx.rain.mc.timesync.data.model.HeFeng;
+import cx.rain.mc.timesync.data.model.IWeatherModel;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import javax.annotation.Nonnull;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +20,8 @@ public class WeatherSource implements ConfigurationSerializable {
     static {
         ConfigurationSerialization.registerClass(WeatherSource.class);
     }
+
+    private static final Gson GSON = new Gson();
 
     private final String name;
     private final WeatherSourceType type;
@@ -41,11 +52,25 @@ public class WeatherSource implements ConfigurationSerializable {
     }
 
     public enum WeatherSourceType {
-        HE_FENG(),
-        CAI_YUN(),
+        HE_FENG(HeFeng.class, "https://api.qweather.com/v7/weather/now?location={2},{3}&key={1}"),
+        HE_FENG_FREE(HeFeng.class, "https://devapi.qweather.com/v7/weather/now?location={2},{3}&key={1}"),
+        CAI_YUN(CaiYun.class, "https://api.caiyunapp.com/v2.6/{1}/{2},{3}/realtime"),
         ;
 
-        WeatherSourceType() {
+        private final Class<? extends IWeatherModel> model;
+        private final String pattern;
+
+        WeatherSourceType(Class<? extends IWeatherModel> model, String pattern) {
+            this.model = model;
+            this.pattern = pattern;
+        }
+
+        public Class<? extends IWeatherModel> getModel() {
+            return model;
+        }
+
+        public String getUrlPattern() {
+            return pattern;
         }
     }
 
@@ -79,5 +104,17 @@ public class WeatherSource implements ConfigurationSerializable {
 
     public int getUpdateIntervalTicks() {
         return updateInterval * 20;
+    }
+
+    public WeatherType fetch() {
+        var formatted = String.format(getType().getUrlPattern(), getKey(), getLongitude(), getLatitude());
+        try {
+            var url = new URL(formatted);
+            var connection = url.openConnection();
+            var model = GSON.fromJson(new InputStreamReader(connection.getInputStream()), getType().getModel());
+            return model.toMinecraft();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

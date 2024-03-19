@@ -1,11 +1,15 @@
-package cx.rain.mc.timesync.config;
+package cx.rain.mc.timesync.data;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import javax.annotation.Nonnull;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class TimeSource implements ConfigurationSerializable {
     static {
@@ -56,5 +60,17 @@ public class TimeSource implements ConfigurationSerializable {
 
     public int getUpdateIntervalTicks() {
         return updateInterval * 20;
+    }
+
+    public int fetch() {
+        if (getType() == TimeSourceType.LOCAL) {
+            var time = ZonedDateTime.now().withZoneSameInstant(ZoneId.of(getTimeZone()));
+            var hoursInSec = TimeUnit.HOURS.toSeconds(time.getHour());
+            var minutesInSec = TimeUnit.MINUTES.toSeconds(time.getMinute());
+            var toClamp = (int) Math.floor((hoursInSec + minutesInSec + time.getSecond()) / 3.6);
+            return Math.max(0, Math.min(23999, toClamp));
+        }
+
+        throw new RuntimeException("Couldn't fetch time for type " + getType());
     }
 }

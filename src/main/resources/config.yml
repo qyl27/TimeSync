@@ -1,22 +1,14 @@
 weatherSource:
-  - ==: cx.rain.mc.timesync.config.WeatherSource
+  - ==: cx.rain.mc.timesync.data.WeatherSource
     name: hefeng
-    type: HE_FENG
+    type: HE_FENG_FREE
     key: ''
     longitude: 116.00
     latitude: 39.00
     updateInterval: 3600
 
-  - ==: cx.rain.mc.timesync.config.WeatherSource
-    name: caiyun
-    type: CAI_YUN
-    key: ''
-    longitude: 116.0000
-    latitude: 39.0000
-    updateInterval: 3600
-
 timeSource:
-  - ==: cx.rain.mc.timesync.config.TimeSource
+  - ==: cx.rain.mc.timesync.data.TimeSource
     name: local
     type: LOCAL
     timeZone: Asia/Shanghai

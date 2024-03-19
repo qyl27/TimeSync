@@ -1,5 +1,7 @@
 package cx.rain.mc.timesync.config;
 
+import cx.rain.mc.timesync.data.TimeSource;
+import cx.rain.mc.timesync.data.WeatherSource;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
