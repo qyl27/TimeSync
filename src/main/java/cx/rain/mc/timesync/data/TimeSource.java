@@ -1,10 +1,8 @@
 package cx.rain.mc.timesync.data;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import javax.annotation.Nonnull;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -12,10 +10,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class TimeSource implements ConfigurationSerializable {
-    static {
-        ConfigurationSerialization.registerClass(TimeSource.class);
-    }
-
     private final String name;
     private final TimeSourceType type;
     private final String timeZone;

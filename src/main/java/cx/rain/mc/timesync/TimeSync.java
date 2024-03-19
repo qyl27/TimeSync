@@ -1,12 +1,15 @@
 package cx.rain.mc.timesync;
 
 import cx.rain.mc.timesync.config.ConfigManager;
+import cx.rain.mc.timesync.data.TimeSource;
+import cx.rain.mc.timesync.data.WeatherSource;
 import cx.rain.mc.timesync.task.UpdateWorldTimeTask;
 import cx.rain.mc.timesync.task.UpdateWorldWeatherTask;
 import cx.rain.mc.timesync.task.WorldTimeFliesTask;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -15,6 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 public final class TimeSync extends JavaPlugin {
+    static {
+        ConfigurationSerialization.registerClass(TimeSource.class);
+        ConfigurationSerialization.registerClass(WeatherSource.class);
+    }
 
     private final ConfigManager configManager;
 
