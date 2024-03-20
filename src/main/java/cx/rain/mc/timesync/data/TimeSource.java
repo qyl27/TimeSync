@@ -61,8 +61,8 @@ public class TimeSource implements ConfigurationSerializable {
             var time = ZonedDateTime.now().withZoneSameInstant(ZoneId.of(getTimeZone()));
             var hoursInSec = TimeUnit.HOURS.toSeconds(time.getHour());
             var minutesInSec = TimeUnit.MINUTES.toSeconds(time.getMinute());
-            var toClamp = (int) Math.floor((hoursInSec + minutesInSec + time.getSecond()) / 3.6);
-            return Math.max(0, Math.min(23999, toClamp));
+            var toClamp = ((int) Math.floor((hoursInSec + minutesInSec + time.getSecond()) / 3.6) + 24000 - 6000) % 24000;
+            return Math.max(0, toClamp);
         }
 
         throw new RuntimeException("Couldn't fetch time for type " + getType());
