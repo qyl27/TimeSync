@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.rikonardo.papermake' version '1.0.6'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'cx.rain.mc'
@@ -20,7 +21,15 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT'
+
+//    implementation 'org.threeten:threeten-extra:1.7.2'
 }
+
+//jar.finalizedBy(shadowJar)
+
+//shadowJar {
+//    relocate 'org.threeten', 'cx.rain.mc.timesync.libs.org.threeten'
+//}
 
 def targetJavaVersion = 17
 java {

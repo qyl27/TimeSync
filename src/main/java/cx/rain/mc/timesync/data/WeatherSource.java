@@ -85,11 +85,11 @@ public class WeatherSource implements ConfigurationSerializable {
         return type;
     }
 
-    public String getKey() {
+    private String getKey() {
         return key;
     }
 
-    public double getLongitude() {
+    private double getLongitude() {
         if (getType() == WeatherSourceType.HE_FENG) {
             return (double) Math.round(longitude * 100) / 100;
         }
@@ -97,7 +97,7 @@ public class WeatherSource implements ConfigurationSerializable {
         return (double) Math.round(longitude * 10000) / 10000;
     }
 
-    public double getLatitude() {
+    private double getLatitude() {
         if (getType() == WeatherSourceType.HE_FENG) {
             return (double) Math.round(latitude * 100) / 100;
         }
