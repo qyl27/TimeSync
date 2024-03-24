@@ -119,7 +119,9 @@ public class TimeSource implements ConfigurationSerializable {
             var delta = Math.asin(Math.sin(lambda) * Math.sin(23.45));
 
             // Todo.
-//            var omega0 = Math.acos()
+            var omega0 = Math.acos((Math.sin(-0.83) - Math.sin(latitude) * Math.sin(delta)) / (Math.cos(latitude) * Math.cos(delta)));
+
+
 
         }
 
