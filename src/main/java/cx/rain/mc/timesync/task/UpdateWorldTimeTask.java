@@ -18,7 +18,8 @@ public class UpdateWorldTimeTask implements Runnable {
     public void run() {
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         try {
-            world.setTime(source.fetch());
+            var tick = source.fetch();
+            world.setTime(tick);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
