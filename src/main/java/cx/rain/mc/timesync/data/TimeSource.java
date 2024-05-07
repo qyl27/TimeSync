@@ -127,10 +127,10 @@ public class TimeSource implements ConfigurationSerializable {
                 return (int) Math.max(0, tick2);
             }
         } else if (type == TimeSourceType.HE_FENG) {
-            var formatted = String.format("https://api.qweather.com/v7/astronomy/sun?location=%1$.2f,%2$.2f&date=%3$4d%4$2d%5$2d&key=%6$s", longitude, latitude, now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), apiKey);
+            var formatted = String.format("https://api.qweather.com/v7/astronomy/sun?location=%1$.2f,%2$.2f&date=%3$04d%4$02d%5$02d&key=%6$s", longitude, latitude, now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), apiKey);
             return FetchHelper.fetchJson(formatted, HeFeng.class, true).toMinecraft();
         } else if (type == TimeSourceType.HE_FENG_FREE) {
-            var formatted = String.format("https://devapi.qweather.com/v7/astronomy/sun?location=%1$.2f,%2$.2f&date=%3$4d%4$2d%5$2d&key=%6$s", longitude, latitude, now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), apiKey);
+            var formatted = String.format("https://devapi.qweather.com/v7/astronomy/sun?location=%1$.2f,%2$.2f&date=%3$04d%4$02d%5$02d&key=%6$s", longitude, latitude, now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), apiKey);
             return FetchHelper.fetchJson(formatted, HeFeng.class, true).toMinecraft();
         }
 
