@@ -1,4 +1,4 @@
-package cx.rain.mc.timesync.data.model;
+package cx.rain.mc.timesync.data.model.weather;
 
 import cx.rain.mc.timesync.data.WeatherType;
 

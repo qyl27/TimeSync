@@ -1,10 +1,10 @@
 package cx.rain.mc.timesync.data;
 
-import com.google.common.io.Resources;
 import com.google.gson.Gson;
-import cx.rain.mc.timesync.data.model.CaiYun;
-import cx.rain.mc.timesync.data.model.HeFeng;
-import cx.rain.mc.timesync.data.model.IWeatherModel;
+import cx.rain.mc.timesync.data.model.weather.CaiYun;
+import cx.rain.mc.timesync.data.model.weather.HeFeng;
+import cx.rain.mc.timesync.data.model.weather.IWeatherModel;
+import cx.rain.mc.timesync.utility.FetchHelper;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import javax.annotation.Nonnull;
@@ -12,13 +12,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 public class WeatherSource implements ConfigurationSerializable {
-    private static final Gson GSON = new Gson();
 
     private final String name;
     private final WeatherSourceType type;
@@ -111,17 +109,6 @@ public class WeatherSource implements ConfigurationSerializable {
 
     public WeatherType fetch() {
         var formatted = String.format(getType().getUrlPattern(), getKey(), getLongitude(), getLatitude());
-        try {
-            var url = new URL(formatted);
-            var connection = url.openConnection();
-            var is = connection.getInputStream();
-            if (getType().isEnforceGzip()) {
-                is = new GZIPInputStream(is);
-            }
-            var model = GSON.fromJson(new BufferedReader(new InputStreamReader(is)), getType().getModel());
-            return model.toMinecraft();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        return FetchHelper.fetchJson(formatted, getType().getModel(), getType().isEnforceGzip()).toMinecraft();
     }
 }

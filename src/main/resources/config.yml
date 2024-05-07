@@ -1,18 +1,23 @@
 weatherSource:
   - ==: cx.rain.mc.timesync.data.WeatherSource
     name: hefeng
+    # HE_FENG, HE_FENG_FREE, CAI_YUN
     type: HE_FENG_FREE
-    key: ''
-    longitude: 116.00
-    latitude: 39.00
     updateInterval: 3600
+    key: ''
+    longitude: 116.41
+    latitude: 39.92
 
 timeSource:
   - ==: cx.rain.mc.timesync.data.TimeSource
     name: local
+    # LOCAL, SUNRISE_EQUATION, HE_FENG, HE_FENG_FREE
     type: LOCAL
     timeZone: Asia/Shanghai
     updateInterval: 3600
+    longitude: 116.41
+    latitude: 39.92
+    key: ''
 
 weatherSyncWorld:
   world: hefeng
