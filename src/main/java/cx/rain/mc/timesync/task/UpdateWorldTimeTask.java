@@ -20,7 +20,7 @@ public class UpdateWorldTimeTask implements Runnable {
         try {
             var tick = source.fetch();
             world.setTime(tick);
-            System.out.println(tick);
+//            System.out.println(tick);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

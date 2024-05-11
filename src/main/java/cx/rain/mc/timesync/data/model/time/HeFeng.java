@@ -11,6 +11,12 @@ public class HeFeng implements ITimeModel {
     public int toMinecraft() {
         var localNow = OffsetDateTime.now();
 
+        if (sunrise == null || sunset == null) {
+            var sec = localNow.getHour() * 3600 + localNow.getMinute() * 60 + localNow.getSecond();
+            var toClamp = ((int) Math.floor(sec / 3.6) + 24000 - 6000) % 24000;
+            return Math.max(0, toClamp);
+        }
+
         var nowSec = localNow.getHour() * 3600 + localNow.getMinute() * 60 + localNow.getSecond();
         var sunriseSec = sunrise.getHour() * 3600 + sunrise.getMinute() * 60 + sunrise.getSecond();
         var sunsetSec = sunset.getHour() * 3600 + sunset.getMinute() * 60 + sunset.getSecond();
